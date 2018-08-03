@@ -5,7 +5,7 @@ var webRouter = require("./lib/web_router");
 
 var carRestApi = require("./lib/rest_api/car");
 var salesRestApi = require("./lib/rest_api/sales");
-
+var staffRestApi = require("./lib/rest_api/staff");
 
 
 
@@ -25,6 +25,7 @@ webRouter.on(app);
 
 carRestApi.on(app);
 salesRestApi.on(app);
+staffRestApi.on(app);
 
 server.listen(process.env.PORT||serverPort);
 console.log("iis 現在使用" + process.env.PORT + " port");
