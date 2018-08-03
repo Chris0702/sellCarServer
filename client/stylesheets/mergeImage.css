@@ -1,0 +1,16 @@
+[type="file"] {
+   display:none;
+}
+
+#uploadImage{
+   display:none;
+}
+
+#uploadDiv{
+    font-size: 20px;
+}
+
+#fileName{
+    height: 50px;
+    width: 300px;
+}
