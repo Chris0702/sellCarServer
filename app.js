@@ -16,6 +16,7 @@ var staffRestApi = require("./lib/rest_api/staff");
 var testDriveRestApi = require("./lib/rest_api/testDrive");
 var companyRestApi = require("./lib/rest_api/company");
 var fileRestApi = require("./lib/rest_api/file");
+var serverRestApi = require("./lib/rest_api/server");
 
 dataBaseInit.mongoDBInit(mongoDBPort,mongoDBName);
 serverUse.on(app);
@@ -27,6 +28,7 @@ staffRestApi.on(app);
 testDriveRestApi.on(app);
 companyRestApi.on(app);
 fileRestApi.on(app);
+serverRestApi.on(app);
 
 server.listen(process.env.PORT||serverPort);
 console.log("iis 現在使用" + process.env.PORT + " port");
