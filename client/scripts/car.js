@@ -32,12 +32,133 @@ function getCars() {
 
 function displayCars(cars) {
     $('#content').children().remove();
+    addCar()
     if (cars.length > 0) {
         for (var i = 0; i < cars.length; i++) {
             createCar(cars[i])
         }
     }
 }
+
+function addCar(){
+	 var item = $('<div/>', {
+        class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
+    }).appendTo($('#content'));
+    item.css('width', '100%');
+
+     var titleName = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+    titleName.html("車型: ")
+
+    var name = $('<input/>', {
+        type: 'text',
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+
+    var titleCompany = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+    titleCompany.html("車廠: ")
+
+    var company = $('<input/>', {
+        type: 'text',
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+
+    var titleColor = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+    titleColor.html("顏色: ")
+
+    var color = $('<input/>', {
+        type: 'text',
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+
+    var titleDescription = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+    titleDescription.html("描述: ")
+
+    var description = $('<input/>', {
+        type: 'text',
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+
+    var titleSpecial_price = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+    titleSpecial_price.html("最低價(萬元): ")
+
+    var special_price = $('<input/>', {
+        type: 'text',
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+
+    var titlePrice = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+    titlePrice.html("最高價(萬元): ")
+
+    var price = $('<input/>', {
+        type: 'text',
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+
+    var item2 = $('<div/>', {
+        class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
+    }).appendTo($('#content'));
+    item2.css('width', '100%');
+
+    var tab = $('<div/>', {
+        class: 'col-md-11 col-sm-11 col-xs-11 col-lg-11'
+    }).appendTo(item2);
+
+    var add = $('<button/>', {
+        class: 'btn btn-primary col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item2);
+    add.html("新增")
+    setAddClick(add, name, company, color, price, special_price, description)
+
+}
+
+function setAddClick(add, name, company, color, price, special_price, description) {
+    add.click(function(e) {
+        var sendColor = color.val();
+        sendColor = sendColor.split(",");
+        sendColor = JSON.stringify(sendColor);
+        $.ajax({
+            url: '/car/saveCarInfo',
+            type: 'POST',
+            data: {
+                name: name.val(),
+                company: company.val(),
+                price: price.val(),
+                special_price: special_price.val(),
+                description: description.val(),
+                color: sendColor
+            },
+            error: function(xhr) {
+                console.log('error')
+                console.log(xhr)
+                alert(xhr);
+            },
+            success: function(result) {
+                console.log('success')
+                console.log(result)
+                result = JSON.parse(result);
+                if (result.resStatus == 0){
+                	getCars()
+                }else{
+                	alert(result);
+                }
+                
+            }
+        });
+    });
+}
+
 
 function createCar(car) {
     var item = $('<div/>', {
