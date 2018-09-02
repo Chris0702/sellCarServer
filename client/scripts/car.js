@@ -45,7 +45,7 @@ function addCar(){
         class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
     }).appendTo($('#content'));
     item.css('width', '100%');
-
+    item.css('margin-top', '1%');
      var titleName = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item);
@@ -110,7 +110,7 @@ function addCar(){
         class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
     }).appendTo($('#content'));
     item2.css('width', '100%');
-
+    item2.css('margin-top', '1%');
     var tab = $('<div/>', {
         class: 'col-md-11 col-sm-11 col-xs-11 col-lg-11'
     }).appendTo(item2);
@@ -166,7 +166,7 @@ function createCar(car) {
         class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
     }).appendTo($('#content'));
     item.css('width', '100%');
-
+    item.css('margin-top', '1%');
     var titleName = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item);
@@ -237,7 +237,7 @@ function createCar(car) {
         class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
     }).appendTo($('#content'));
     item2.css('width', '100%');
-
+    item2.css('margin-top', '1%');
     var titleImg = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
