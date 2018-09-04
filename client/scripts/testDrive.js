@@ -1,6 +1,6 @@
 console.log("js init");
 var selectCompany = "";
-var paymentTypeValue = ["現金","刷卡"];
+var paymentTypeValue = ["請選擇時段","現金","刷卡"];
 var statusValue = ["receive","pending","failure","success"];
 
 $(document).ready(function() {
@@ -170,16 +170,11 @@ function createTestDrive(testDrive){
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
 
-    // paymentType.append($("<option></option>").attr("value", "現金").text("現金"));
-    // paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
-        // console.log(testDrive.payment_type)
     for(var j=0;j<paymentTypeValue.length;j++){
         paymentType.append($("<option></option>").attr("value", paymentTypeValue[j]).text(paymentTypeValue[j]));
-        // paymentType.append($("<option></option>").attr("value", paymentTypeValue[j]).text(paymentTypeValue[j]));
         if(paymentTypeValue[j] == testDrive.payment_type){
-            console.log('match')
-            paymentType.val(j);
-            // paymentType.text(testDrive.payment_type);
+            paymentType.val(paymentTypeValue[j]);
+            // paymentType.attr(paymentTypeValue[j],true);
         }
     }
 
@@ -194,16 +189,6 @@ function createTestDrive(testDrive){
          value: testDrive.address,
         class: 'col-md-3 col-sm-3 col-xs-3 col-lg-3'
     }).appendTo(item2);
-
-    // var titleHopeDate = $('<div/>', {
-    //     class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    // }).appendTo(item2);
-    // titleHopeDate.html("試乘日期: ")
-
-    // var hopedate = $('<input/>', {
-    //     type: 'date',
-    //     class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    // }).appendTo(item2);
 
     var titleHopeTime = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
@@ -230,10 +215,24 @@ function createTestDrive(testDrive){
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
 
-    status.append($("<option></option>").attr("value", "receive").text("receive"));
-    status.append($("<option></option>").attr("value", "pending").text("pending"));
-    status.append($("<option></option>").attr("value", "failure").text("failure"));
-    status.append($("<option></option>").attr("value", "success").text("success"));
+
+    for(var j=0;j<statusValue.length;j++){
+        status.append($("<option></option>").attr("value", statusValue[j]).text(statusValue[j]));
+        if(statusValue[j] == testDrive.status){
+            status.val(statusValue[j]);
+            // status.attr(statusValue[j],true);
+        }
+    }
+
+
+    // status.append($("<option></option>").attr("value", "receive").text("receive"));
+    // status.append($("<option></option>").attr("value", "pending").text("pending"));
+    // status.append($("<option></option>").attr("value", "failure").text("failure"));
+    // status.append($("<option></option>").attr("value", "success").text("success"));
+
+
+
+
     var change = $('<button/>', {
         class: 'btn btn-success col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
@@ -244,6 +243,8 @@ function createTestDrive(testDrive){
         class: 'btn btn-danger col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
     remove.html("刪除")
+    setChangeClick(change, testDrive._id,  name, phone, company,carCompany, carName, color, paymentType,address,hopeTime,status)
+    setRemoveClick(remove, testDrive._id)
     // setAddClick(add, name, company, color, price, special_price, description)
 }
 
@@ -328,6 +329,7 @@ function addTestDrive(){
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
 
+    paymentType.append($("<option></option>").attr("value", "請選擇時段").text("請選擇時段"));
     paymentType.append($("<option></option>").attr("value", "現金").text("現金"));
     paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
 
@@ -381,20 +383,6 @@ function addTestDrive(){
 
 function setAddClick(add, name, phone, company,carCompany, carName, color, paymentType,address,hopeDate,hopeTime) {
     add.click(function(e) {
-        var sendColor = color.val();
-        sendColor = sendColor.split(",");
-        sendColor = JSON.stringify(sendColor);
-        var send = {
-                'name': name.val(),
-                'company': company.val(),
-                'phone': phone.val(),
-                'address': address.val(),
-                'payment_type': paymentType.val(),
-                'car_name': carName.val(),
-                'car_company': carCompany.val(),
-                'car_color': color.val(),
-                'hopeTime': hopeDate.val()+" "+hopeTime.val()
-            }
         $.ajax({
             url: '/testDrive/saveTestDriveInfo',
             type: 'POST',
@@ -416,7 +404,6 @@ function setAddClick(add, name, phone, company,carCompany, carName, color, payme
             },
             success: function(result) {
                 console.log('success')
-                console.log(send)
                 console.log(result)
                 result = JSON.parse(result);
                 if (result.resStatus == 0){
@@ -431,123 +418,14 @@ function setAddClick(add, name, phone, company,carCompany, carName, color, payme
 }
 
 
-function createCar(car) {
-    var item = $('<div/>', {
-        id: car._id,
-        class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
-    }).appendTo($('#content'));
-    item.css('width', '100%');
-    item.css('margin-top', '1%');
-    var titleName = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-    titleName.html("車型: ")
 
-    var name = $('<input/>', {
-        type: 'text',
-        value: car.name,
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-
-    var titleCompany = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-    titleCompany.html("車廠: ")
-
-    var company = $('<input/>', {
-        type: 'text',
-        value: car.company,
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-
-    var titleColor = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-    titleColor.html("顏色: ")
-
-    var color = $('<input/>', {
-        type: 'text',
-        value: car.color,
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-
-    var titleDescription = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-    titleDescription.html("描述: ")
-
-    var description = $('<input/>', {
-        type: 'text',
-        value: car.description,
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-
-    var titleSpecial_price = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-    titleSpecial_price.html("最低價(萬元): ")
-
-    var special_price = $('<input/>', {
-        type: 'text',
-        value: car.special_price,
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-
-    var titlePrice = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-    titlePrice.html("最高價(萬元): ")
-
-    var price = $('<input/>', {
-        type: 'text',
-        value: car.price,
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-
-    var item2 = $('<div/>', {
-        class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
-    }).appendTo($('#content'));
-    item2.css('width', '100%');
-    item2.css('margin-top', '1%');
-    var titleImg = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item2);
-
-    titleImg.html("圖片:")
-
-    var img = $('<img/>', {
-        src: car.imgPath,
-        class: 'col-md-2 col-sm-2 col-xs-2 col-lg-2'
-    }).appendTo(item2);
-
-    var tab = $('<div/>', {
-        id: car._id,
-        class: 'col-md-7 col-sm-7 col-xs-7 col-lg-7'
-    }).appendTo(item2);
-
-    var change = $('<button/>', {
-        id: car._id,
-        class: 'btn btn-success col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item2);
-    change.html("修改")
-
-    setChangeClick(change, car._id, name, company, color, price, special_price, description)
-
-    var remove = $('<button/>', {
-        id: car._id,
-        class: 'btn btn-danger col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item2);
-    remove.html("刪除")
-    setRemoveClick(remove, car._id)
-}
-
-function setRemoveClick(remove, car_id) {
+function setRemoveClick(remove, testDrive_id) {
     remove.click(function(e) {
         $.ajax({
-            url: '/car/removeCarInfo',
+            url: '/testDrive/removeTestDriveInfo',
             type: 'DELETE',
             headers: {
-                "car_id": car_id
+                "test_drive_id": testDrive_id
             },
             data: {},
             error: function(xhr) {
@@ -559,7 +437,7 @@ function setRemoveClick(remove, car_id) {
                 console.log(result)
                 result = JSON.parse(result);
                 if (result.resStatus == 0){
-                	getCars()
+                	getTestDriveAll()
                 }else{
                 	alert(result);
                 }
@@ -568,22 +446,23 @@ function setRemoveClick(remove, car_id) {
     });
 }
 
-function setChangeClick(change, car_id, name, company, color, price, special_price, description) {
+function setChangeClick(change, testDrive_id,  name, phone, company,carCompany, carName, color, paymentType,address,hopeTime,status) {
     change.click(function(e) {
-        var sendColor = color.val();
-        sendColor = sendColor.split(",");
-        sendColor = JSON.stringify(sendColor);
         $.ajax({
-            url: '/car/saveCarInfo',
+            url: '/testDrive/saveTestDriveInfo',
             type: 'POST',
             data: {
-                car_id: car_id,
-                name: name.val(),
-                company: company.val(),
-                price: price.val(),
-                special_price: special_price.val(),
-                description: description.val(),
-                color: sendColor
+                'test_drive_id':testDrive_id,
+                'name': name.val(),
+                'company': company.val(),
+                'phone': phone.val(),
+                'address': address.val(),
+                'payment_type': paymentType.val(),
+                'car_name': carName.val(),
+                'car_company': carCompany.val(),
+                'car_color': color.val(),
+                'hopeTime': hopeTime.val(),
+                'status' : status.val()
             },
             error: function(xhr) {
                 console.log('error')
@@ -595,9 +474,9 @@ function setChangeClick(change, car_id, name, company, color, price, special_pri
                 console.log(result)
                 result = JSON.parse(result);
                 if (result.resStatus == 0){
-                	getCars()
+                    getTestDriveAll()
                 }else{
-                	alert(result);
+                    alert(result);
                 }
                 
             }
