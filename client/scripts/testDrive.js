@@ -69,7 +69,7 @@ function displayTestDrive(testDrives) {
     
     addTestDrive()
     if (testDrives.length > 0) {
-        for (var i = 0; i < testDrives.length; i++) {
+        for (var i = testDrives.length -1; i > 0; i--) {
             createTestDrive(testDrives[i])
         }
     }
@@ -116,6 +116,17 @@ function createTestDrive(testDrive){
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item);
 
+    var titleCarCompany = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+    titleCarCompany.html("車廠: ")
+
+    var carCompany = $('<input/>', {
+        type: 'text',
+        value: testDrive.car_company,
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+
     var titleCarName = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item);
@@ -138,17 +149,6 @@ function createTestDrive(testDrive){
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item);
 
-     var titlePaymentType = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-    titlePaymentType.html("付款方式: ")
-
-    var paymentType = $('<select/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-
-    paymentType.append($("<option></option>").attr("value", "現金").text("現金"));
-    paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
 
     // paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
 
@@ -157,6 +157,18 @@ function createTestDrive(testDrive){
     }).appendTo($('#content'));
     item2.css('width', '100%');
     item2.css('margin-top', '1%');
+
+     var titlePaymentType = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item2);
+    titlePaymentType.html("付款方式: ")
+
+    var paymentType = $('<select/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item2);
+
+    paymentType.append($("<option></option>").attr("value", "現金").text("現金"));
+    paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
 
     var titleAddress = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
@@ -197,10 +209,9 @@ function createTestDrive(testDrive){
     titleStatus.html("狀態: ")
 
     let orderReceive = 'receive';
-let orderPending = 'pending';
-let orderFailure = 'failure';
-let orderSuccess = 'success';
-
+    let orderPending = 'pending';
+    let orderFailure = 'failure';
+    let orderSuccess = 'success';
     var status = $('<select/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
@@ -209,13 +220,6 @@ let orderSuccess = 'success';
     status.append($("<option></option>").attr("value", "pending").text("pending"));
     status.append($("<option></option>").attr("value", "failure").text("failure"));
     status.append($("<option></option>").attr("value", "success").text("success"));
-
-
-
-    $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item2);
-
     var change = $('<button/>', {
         class: 'btn btn-success col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
@@ -265,6 +269,16 @@ function addTestDrive(){
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item);
 
+     var titleCarCompany = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+    titleCarCompany.html("車廠: ")
+
+    var carCompany = $('<input/>', {
+        type: 'text',
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item);
+
     var titleCarName = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item);
@@ -285,23 +299,23 @@ function addTestDrive(){
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item);
 
-     var titlePaymentType = $('<div/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-    titlePaymentType.html("付款方式: ")
-
-    var paymentType = $('<select/>', {
-        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
-    }).appendTo(item);
-
-    paymentType.append($("<option></option>").attr("value", "現金").text("現金"));
-    paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
-
     var item2 = $('<div/>', {
         class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
     }).appendTo($('#content'));
     item2.css('width', '100%');
     item2.css('margin-top', '1%');
+
+     var titlePaymentType = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item2);
+    titlePaymentType.html("付款方式: ")
+
+    var paymentType = $('<select/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item2);
+
+    paymentType.append($("<option></option>").attr("value", "現金").text("現金"));
+    paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
 
     var titleAddress = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
@@ -318,7 +332,7 @@ function addTestDrive(){
     }).appendTo(item2);
     titleHopeDate.html("試乘日期: ")
 
-    var hopedate = $('<input/>', {
+    var hopeDate = $('<input/>', {
         type: 'date',
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
@@ -328,14 +342,14 @@ function addTestDrive(){
     }).appendTo(item2);
     titleHopeTime.html("試乘時段: ")
 
-    var hopetime = $('<select/>', {
+    var hopeTime = $('<select/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
     
-    hopetime.append($("<option></option>").attr("value", "早上").text("早上"));
-    hopetime.append($("<option></option>").attr("value", "中午").text("中午"));
-    hopetime.append($("<option></option>").attr("value", "晚上").text("晚上"));
-    hopetime.append($("<option></option>").attr("value", "半夜").text("半夜"));
+    hopeTime.append($("<option></option>").attr("value", "早上").text("早上"));
+    hopeTime.append($("<option></option>").attr("value", "中午").text("中午"));
+    hopeTime.append($("<option></option>").attr("value", "晚上").text("晚上"));
+    hopeTime.append($("<option></option>").attr("value", "半夜").text("半夜"));
 
 
     $('<div/>', {
@@ -346,26 +360,40 @@ function addTestDrive(){
         class: 'btn btn-primary col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
     add.html("新增")
-    // setAddClick(add, name, company, color, price, special_price, description)
+    setAddClick(add, name, phone, company,carCompany, carName, color, paymentType,address,hopeDate,hopeTime)
 }
 
 
 
-function setAddClick(add, name, company, color, price, special_price, description) {
+function setAddClick(add, name, phone, company,carCompany, carName, color, paymentType,address,hopeDate,hopeTime) {
     add.click(function(e) {
         var sendColor = color.val();
         sendColor = sendColor.split(",");
         sendColor = JSON.stringify(sendColor);
+        var send = {
+                'name': name.val(),
+                'company': company.val(),
+                'phone': phone.val(),
+                'address': address.val(),
+                'payment_type': paymentType.val(),
+                'car_name': carName.val(),
+                'car_company': carCompany.val(),
+                'car_color': color.val(),
+                'hopeTime': hopeDate.val()+" "+hopeTime.val()
+            }
         $.ajax({
-            url: '/car/saveCarInfo',
+            url: '/testDrive/saveTestDriveInfo',
             type: 'POST',
             data: {
-                name: name.val(),
-                company: company.val(),
-                price: price.val(),
-                special_price: special_price.val(),
-                description: description.val(),
-                color: sendColor
+                'name': name.val(),
+                'company': company.val(),
+                'phone': phone.val(),
+                'address': address.val(),
+                'payment_type': paymentType.val(),
+                'car_name': carName.val(),
+                'car_company': carCompany.val(),
+                'car_color': color.val(),
+                'hopeTime': hopeDate.val()+" "+hopeTime.val()
             },
             error: function(xhr) {
                 console.log('error')
@@ -374,10 +402,11 @@ function setAddClick(add, name, company, color, price, special_price, descriptio
             },
             success: function(result) {
                 console.log('success')
+                console.log(send)
                 console.log(result)
                 result = JSON.parse(result);
                 if (result.resStatus == 0){
-                	getCars()
+                	getTestDriveAll()
                 }else{
                 	alert(result);
                 }
