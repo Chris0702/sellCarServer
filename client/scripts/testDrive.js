@@ -1,5 +1,8 @@
 console.log("js init");
 var selectCompany = "";
+var paymentTypeValue = ["現金","刷卡"];
+var statusValue = ["receive","pending","failure","success"];
+
 $(document).ready(function() {
    getTestDriveAll();
 });
@@ -167,8 +170,19 @@ function createTestDrive(testDrive){
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
     }).appendTo(item2);
 
-    paymentType.append($("<option></option>").attr("value", "現金").text("現金"));
-    paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
+    // paymentType.append($("<option></option>").attr("value", "現金").text("現金"));
+    // paymentType.append($("<option></option>").attr("value", "刷卡").text("刷卡"));
+        // console.log(testDrive.payment_type)
+    for(var j=0;j<paymentTypeValue.length;j++){
+        paymentType.append($("<option></option>").attr("value", paymentTypeValue[j]).text(paymentTypeValue[j]));
+        // paymentType.append($("<option></option>").attr("value", paymentTypeValue[j]).text(paymentTypeValue[j]));
+        if(paymentTypeValue[j] == testDrive.payment_type){
+            console.log('match')
+            paymentType.val(j);
+            // paymentType.text(testDrive.payment_type);
+        }
+    }
+
 
     var titleAddress = $('<div/>', {
         class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
