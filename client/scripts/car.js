@@ -41,7 +41,7 @@ function displayCars(cars) {
 }
 
 function addCar(){
-	 var item = $('<div/>', {
+	var item = $('<div/>', {
         class: 'col-md-12 col-sm-12 col-xs-12 col-lg-12'
     }).appendTo($('#content'));
     item.css('width', '100%');
@@ -159,6 +159,14 @@ function setAddClick(add, name, company, color, price, special_price, descriptio
     });
 }
 
+function createUploadCarImageForm(car_company,car_name){
+    //  var form = $('<form/>', {
+    //     id: uploadForm,
+    //     class: 'form-horizontal',
+    //     enctype: 'multipart/form-data',
+    //     action: ''
+    // }).appendTo($('#content'));
+}
 
 function createCar(car) {
     var item = $('<div/>', {
@@ -251,8 +259,25 @@ function createCar(car) {
 
     var tab = $('<div/>', {
         id: car._id,
-        class: 'col-md-7 col-sm-7 col-xs-7 col-lg-7'
+        class: 'col-md-2 col-sm-2 col-xs-2 col-lg-2'
     }).appendTo(item2);
+
+    var titleUploadImg = $('<div/>', {
+        class: 'col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item2);
+    titleUploadImg.html("上傳圖片:")
+     var uploadImg = $('<input/>', {
+        type: 'file',
+        class: 'col-md-3 col-sm-3 col-xs-3 col-lg-3'
+    }).appendTo(item2);
+
+    var upload = $('<button/>', {
+        id: car._id,
+        class: 'btn btn-info col-md-1 col-sm-1 col-xs-1 col-lg-1'
+    }).appendTo(item2);
+    upload.html("上傳圖片")
+
+    setUploadClick(upload,car.company,car.name)
 
     var change = $('<button/>', {
         id: car._id,
@@ -268,6 +293,10 @@ function createCar(car) {
     }).appendTo(item2);
     remove.html("刪除")
     setRemoveClick(remove, car._id)
+}
+
+function setUploadClick(upload, car_company,car_name) {
+   
 }
 
 function setRemoveClick(remove, car_id) {
