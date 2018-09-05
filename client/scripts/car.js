@@ -10,6 +10,7 @@ $(document).ready(function() {
 });
 
 function getCars() {
+    console.log('getCars')
     $.ajax({
         url: '/car/getCarsInfoByCompany',
         type: 'GET',
@@ -23,6 +24,7 @@ function getCars() {
         success: function(result) {
             console.log('success')
             result = JSON.parse(result);
+             console.log(result)
             if (result.resStatus == 0) {
                 displayCars(result.resString)
             }
@@ -159,15 +161,6 @@ function setAddClick(add, name, company, color, price, special_price, descriptio
     });
 }
 
-function createUploadCarImageForm(car_company,car_name){
-    //  var form = $('<form/>', {
-    //     id: uploadForm,
-    //     class: 'form-horizontal',
-    //     enctype: 'multipart/form-data',
-    //     action: ''
-    // }).appendTo($('#content'));
-}
-
 function createCar(car) {
     var item = $('<div/>', {
         id: car._id,
@@ -253,7 +246,7 @@ function createCar(car) {
     titleImg.html("圖片:")
 
     var img = $('<img/>', {
-        src: car.imgPath,
+        src: car.imgPath+"?"+Math.random(),
         class: 'col-md-2 col-sm-2 col-xs-2 col-lg-2'
     }).appendTo(item2);
 
@@ -277,7 +270,7 @@ function createCar(car) {
     }).appendTo(item2);
     upload.html("上傳圖片")
 
-    setUploadClick(upload,car.company,car.name)
+    setUploadClick(upload,uploadImg,car.company,car.name)
 
     var change = $('<button/>', {
         id: car._id,
@@ -295,8 +288,41 @@ function createCar(car) {
     setRemoveClick(remove, car._id)
 }
 
-function setUploadClick(upload, car_company,car_name) {
-   
+function setUploadClick(upload,file, car_company,car_name) {
+    upload.click(function(){   
+    var preview = 1;    
+    var files = file.get(0).files;
+    if(files.length == 0){
+        alert('未選擇檔案')
+        return
+    }   
+    var formData = new FormData();   
+    formData.append("uploadImage", files[0]);   
+    $.ajax({   
+        url: '/file/uploadImage',
+        headers:{
+            'new_path':'company/'+car_company+'/image/car/'+car_name+'.png'
+        },   
+        data: formData,    
+        dataType: "json",   
+        type: "POST",   
+        cache: false,   
+        contentType: false,   
+        processData: false,   
+        error: function(xhr) {   
+            console.log('upload error')
+            alert('upload error')
+        },   
+        success: function(json) {   
+            console.log('upload success')
+            getCars()
+        },   
+        complete: function(json){   
+        }   
+    });   
+});  
+
+
 }
 
 function setRemoveClick(remove, car_id) {
