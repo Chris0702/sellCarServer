@@ -242,16 +242,22 @@ function createCar(car) {
     setRemoveClick(remove, car._id)
 }
 
-function setUploadClick(upload, file, car_company, car_name) {
+function uuid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+function setUploadClick(upload, file) {
     upload.click(function() {
-        var preview = 1;
         var files = file.get(0).files;
         if (files.length == 0) {
             alert('未選擇檔案')
             return
         }
         var formData = new FormData();
-        var new_path = 'company/' + car_company + '/image/car/' + car_name + '.png';
+        var new_path = 'company/' + selectCompany + '/image/poster/' + uuid() + '.png';
         formData.append("uploadImage", files[0]);
 
         console.log(formData)
@@ -277,8 +283,10 @@ function setUploadClick(upload, file, car_company, car_name) {
                 // alert('upload error')
             },
             success: function(json) {
+
                 console.log('upload success')
-                getCars()
+                console.log(json)
+                getPoster()
             },
             complete: function(json) {}
         });
