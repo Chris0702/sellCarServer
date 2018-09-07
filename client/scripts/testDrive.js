@@ -72,7 +72,7 @@ function displayTestDrive(testDrives) {
     
     addTestDrive()
     if (testDrives.length > 0) {
-        for (var i = testDrives.length -1; i > 0; i--) {
+        for (var i = testDrives.length -1; i >= 0; i--) {
             createTestDrive(testDrives[i])
         }
     }
